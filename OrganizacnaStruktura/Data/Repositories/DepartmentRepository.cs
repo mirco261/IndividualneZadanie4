@@ -32,7 +32,7 @@ namespace Data.Repositories
                                               ,o1.Code 
                                               ,o1.Name
                                               ,o1.Hierarchy
-                                              ,o1.ParentDepartment
+                                              ,o1.ParentDepartmentID
                                               ,o1.HeadEmployeeID
 											  ,o2.Name
 											  ,e.LastName+ ' '+ e.FirstName+ ' '+ e.Title as  'HeadEmployeeName'
@@ -93,19 +93,19 @@ namespace Data.Repositories
                                                ([Code]
                                                ,[Name]
                                                ,[Hierarchy]
-                                               ,[ParentDepartment]
+                                               ,[ParentDepartmentID]
                                                ,[HeadEmployeeID])
                                          VALUES
                                                (@Code
                                                ,@Name
                                                ,@Hierarchy
-                                               ,@ParentDepartment
+                                               ,@ParentDepartmentID
                                                ,@HeadEmployeeID)";
 
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartmentID;
+                        command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
                         command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
 
                         return command.ExecuteNonQuery() > 0;
@@ -140,7 +140,7 @@ namespace Data.Repositories
                                                    SET [Code] = @Code
                                                       ,[Name] = @Name
                                                       ,[Hierarchy] = @Hierarchy
-                                                      ,[ParentDepartment] = @ParentDepartment
+                                                      ,[ParentDepartmentID] = @ParentDepartment
                                                       ,[HeadEmployeeID] = @HeadEmployeeID
                                                  WHERE [ID] = @ID";
 
@@ -148,7 +148,7 @@ namespace Data.Repositories
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartmentID;
+                        command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
                         command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
 
                         return command.ExecuteNonQuery() > 0;

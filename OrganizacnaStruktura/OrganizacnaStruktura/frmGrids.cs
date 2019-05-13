@@ -33,16 +33,13 @@ namespace OrganizacnaStruktura
                 case EFrmType.departments:
                     Text = "Zoznam oddelení";
                     break;
-                default:
-                    break;
             }
-
-            RefreshGrid(eFrmType);
+            RefreshGrid();
         }
 
-        private void RefreshGrid(EFrmType eFrmType)
+        private void RefreshGrid()
         {
-            switch (eFrmType)
+            switch (_eFrmType)
             {
                 case EFrmType.employees:
                     dataGridView.DataSource = "";
@@ -70,10 +67,8 @@ namespace OrganizacnaStruktura
                     dataGridView.Columns["HeadEmployeeID"].Visible = false;
                     dataGridView.Columns["HeadEmployeeName"].HeaderText = "Zodpovedný zamestnanec";
                     break;
-                default:
-                    break;
             }
-            dataGridView.Rows[0].Selected = false;
+            //dataGridView.Rows[0].Selected = false;
 
         }
 
@@ -82,27 +77,21 @@ namespace OrganizacnaStruktura
             switch (_eFrmType)
             {
                 case EFrmType.employees:
-                    EmployeeModel employee = new EmployeeModel();
-                    using (frmEmployee _frmEmployee = new frmEmployee(EFrmAction.add, employee))
+                    using (frmEmployee frmEmployee = new frmEmployee(EFrmAction.add, null))
                     {
-                        _frmEmployee.ShowDialog();
-                        RefreshGrid(_eFrmType);
+                        frmEmployee.ShowDialog();
+                        RefreshGrid();
                     }
                     break;
 
                 case EFrmType.departments:
-                    DepartmentModel department = new DepartmentModel();
-                    using (frmDepartment frmDepartment = new frmDepartment(EFrmAction.add, department))
+                    using (frmDepartment frmDepartment = new frmDepartment(EFrmAction.add, null))
                     {
                         frmDepartment.ShowDialog();
-                        RefreshGrid(_eFrmType);
+                        RefreshGrid();
                     }
                     break;
-
-                default:
-                    break;
             }
-
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -113,11 +102,11 @@ namespace OrganizacnaStruktura
                 switch (_eFrmType)
                 {
                     case EFrmType.employees:
-                        EmployeeModel _employee = (EmployeeModel)dataGridView.CurrentRow.DataBoundItem;
-                        using (frmEmployee _frmEmployee = new frmEmployee(EFrmAction.edit, _employee))
+                        EmployeeModel employee = (EmployeeModel)dataGridView.CurrentRow.DataBoundItem;
+                        using (frmEmployee frmEmployee = new frmEmployee(EFrmAction.edit, employee))
                         {
-                            _frmEmployee.ShowDialog();
-                            RefreshGrid(_eFrmType);
+                            frmEmployee.ShowDialog();
+                            RefreshGrid();
                         }
                         break;
 
@@ -126,11 +115,8 @@ namespace OrganizacnaStruktura
                         using (frmDepartment frmDepartment = new frmDepartment(EFrmAction.edit, department))
                         {
                             frmDepartment.ShowDialog();
-                            RefreshGrid(_eFrmType);
+                            RefreshGrid();
                         }
-                        break;
-
-                    default:
                         break;
                 }
             }

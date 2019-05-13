@@ -15,14 +15,14 @@ namespace OrganizacnaStruktura
     public partial class frmEmployee : Form
     {
         EmployeesLogic _employeeLogic = new EmployeesLogic();
-        DepartmentsLogic _departmentsLogic = new DepartmentsLogic();
         EmployeeModel _employee = new EmployeeModel();
 
         public frmEmployee(EFrmAction eFrmAction, EmployeeModel employee)
         {
             InitializeComponent();
 
-            cmbDepartment.DataSource = _departmentsLogic.GetDepartments();
+            DepartmentsLogic departmentsLogic = new DepartmentsLogic();
+            cmbDepartment.DataSource = departmentsLogic.GetDepartments();
             cmbDepartment.DisplayMember = "Name";
             cmbDepartment.ValueMember = "ID";
 
@@ -48,28 +48,42 @@ namespace OrganizacnaStruktura
 
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
-            _employee = LoadEmployeeFromFrm(_employee);
-            _employeeLogic.UpdateEmployee(_employee);
+            EmployeeModel employee = LoadEmployeeFromFrm(_employee);
+            _employeeLogic.UpdateEmployee(employee);
             Close();
         }
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            EmployeeModel employee = LoadEmployeeFromFrm(_employee);
+            EmployeeModel employee = LoadEmployeeFromFrm();
             _employeeLogic.InsertEmployee(employee);
             Close();
         }
 
-        private EmployeeModel LoadEmployeeFromFrm(EmployeeModel _employee)
+        private EmployeeModel LoadEmployeeFromFrm()
         {
-            _employee.Title = txbTitle.Text;
-            _employee.FirstName = txbFirstName.Text;
-            _employee.Lastname = txbLastName.Text;
-            _employee.Telephone = txbTelephone.Text;
-            _employee.Email = txbEmail.Text;
+            EmployeeModel employee = new EmployeeModel();
+            employee.Title = txbTitle.Text;
+            employee.FirstName = txbFirstName.Text;
+            employee.Lastname = txbLastName.Text;
+            employee.Telephone = txbTelephone.Text;
+            employee.Email = txbEmail.Text;
             DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
-            _employee.DepartmentID = dep.ID;
-            return _employee;
+            employee.DepartmentID = dep.ID;
+            return employee;
+        }
+
+        private EmployeeModel LoadEmployeeFromFrm(EmployeeModel employee)
+        {
+            employee.ID = employee.ID;
+            employee.Title = txbTitle.Text;
+            employee.FirstName = txbFirstName.Text;
+            employee.Lastname = txbLastName.Text;
+            employee.Telephone = txbTelephone.Text;
+            employee.Email = txbEmail.Text;
+            DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
+            employee.DepartmentID = dep.ID;
+            return employee;
         }
 
         private void FillFrmFromEmployee(EmployeeModel employee)

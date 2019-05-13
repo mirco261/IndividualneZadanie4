@@ -15,9 +15,7 @@ namespace OrganizacnaStruktura
     public partial class frmDepartment : Form
     {
         DepartmentsLogic _departmentsLogic = new DepartmentsLogic();
-        EmployeesLogic _employeesLogic = new EmployeesLogic();
         private DepartmentModel _department;
-
 
         public frmDepartment(EFrmAction eFrmType, DepartmentModel department)
         {
@@ -25,7 +23,8 @@ namespace OrganizacnaStruktura
             cmbHierarchy.DataSource = Enum.GetValues(typeof(EHierarchy));
             _department = department;
 
-            cmbHeadEmployee.DataSource = _employeesLogic.GetEmployees();
+            EmployeesLogic employeesLogic = new EmployeesLogic();
+            cmbHeadEmployee.DataSource = employeesLogic.GetEmployees();
             cmbHeadEmployee.DisplayMember = "FullName";
             cmbHeadEmployee.ValueMember = "ID";
 
@@ -41,9 +40,7 @@ namespace OrganizacnaStruktura
                     Text = "Editácia existujúceho oddelenia";
                     lblNameOfFrm.Text = "Editácia existujúceho oddelenia";
                     btnSaveNew.Visible = false;
-                    FillFormFromDepartment(department);
-                    break;
-                default:
+                    FillFormFromDepartment(_department);
                     break;
             }
         }
@@ -53,6 +50,7 @@ namespace OrganizacnaStruktura
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
             DepartmentModel department = LoadDeparmentFromFrm();
+            department.ID = _department.ID;
             _departmentsLogic.UpdateDepartment(department);
             Close();
         }
@@ -75,11 +73,16 @@ namespace OrganizacnaStruktura
             department.Name = txbDepartmentName.Text;
             department.Hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
             DepartmentModel dep = (DepartmentModel)(cmbParentDeparment.SelectedItem);
-            department.ParentDepartmentID = dep.ID;
-            department.ID = _department.ID;
-
+            if (dep != null)
+            {
+                department.ParentDepartmentID = dep.ID;
+            }
             EmployeeModel employee = (EmployeeModel)cmbHeadEmployee.SelectedItem;
-            department.HeadEmployeeID = employee.ID;
+            if (employee != null)
+            {
+                department.HeadEmployeeID = employee.ID;
+            }
+
             return department;
         }
 
