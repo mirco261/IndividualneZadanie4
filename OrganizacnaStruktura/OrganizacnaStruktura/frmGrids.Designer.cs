@@ -35,12 +35,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // dgvDepartments
+            // dataGridView
             // 
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView.Name = "dgvDepartments";
+            this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView.Size = new System.Drawing.Size(800, 385);
@@ -75,7 +77,7 @@
             this.btnDelete.Text = "Vymaž";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
-            // frmDepartments
+            // frmGrids
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -84,7 +86,7 @@
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dataGridView);
-            this.Name = "frmDepartments";
+            this.Name = "frmGrids";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmDepartments";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

@@ -47,10 +47,28 @@ namespace OrganizacnaStruktura
                 case EFrmType.employees:
                     dataGridView.DataSource = "";
                     dataGridView.DataSource = _employeesLogic.GetEmployees();
+                    dataGridView.Columns["ID"].Visible = false;
+                    dataGridView.Columns["Title"].HeaderText = "Titul";
+                    dataGridView.Columns["FirstName"].HeaderText = "Krstné meno";
+                    dataGridView.Columns["Lastname"].HeaderText = "Priezvisko";
+                    dataGridView.Columns["Telephone"].HeaderText = "Klapka/Telefón";
+                    dataGridView.Columns["Email"].HeaderText = "Email";
+                    dataGridView.Columns["DepartmentName"].HeaderText = "Oddelenie";
+                    dataGridView.Columns["DepartmentID"].Visible = false;
+                    dataGridView.Columns["FullName"].Visible = false;
                     break;
                 case EFrmType.departments:
                     dataGridView.DataSource = "";
                     dataGridView.DataSource = _departmentsLogic.GetDepartments();
+                    dataGridView.Columns["ID"].Visible = false;
+                    dataGridView.Columns["Code"].HeaderText = "Kód oddelenia";
+                    dataGridView.Columns["Name"].HeaderText = "Názov oddelenia";
+                    dataGridView.Columns["Hierarchy"].HeaderText = "Úroveň oddelenia";
+                    dataGridView.Columns["ParentDepartmentID"].Visible = false;
+                    dataGridView.Columns["HeadEmployeeID"].Visible = false;
+                    dataGridView.Columns["ParentDepartmentName"].HeaderText = "Nadriadené oddelenie";
+                    dataGridView.Columns["HeadEmployeeID"].Visible = false;
+                    dataGridView.Columns["HeadEmployeeName"].HeaderText = "Zodpovedný zamestnanec";
                     break;
                 default:
                     break;

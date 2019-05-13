@@ -28,13 +28,19 @@ namespace Data.Repositories
                 }
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"SELECT [ID]
-                                              ,[Code]
-                                              ,[Name]
-                                              ,[Hierarchy]
-                                              ,[ParentDepartment]
-                                              ,[HeadEmployeeID]
-                                              FROM [Oddelenie]";
+                    command.CommandText = @"SELECT o1.ID
+                                              ,o1.Code 
+                                              ,o1.Name
+                                              ,o1.Hierarchy
+                                              ,o1.ParentDepartment
+                                              ,o1.HeadEmployeeID
+											  ,o2.Name
+											  ,e.LastName+ ' '+ e.FirstName+ ' '+ e.Title as  'HeadEmployeeName'
+                                              FROM Department as o1
+											  left join Department as o2
+											  on o1.ParentDepartment = o2.ID
+											  left join Employee as e
+											  on o1.HeadEmployeeID = e.ID";
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -47,8 +53,10 @@ namespace Data.Repositories
                                     department.Code = reader.GetString(1);
                                     department.Name = reader.GetString(2);
                                     department.Hierarchy = (EHierarchy)(reader.GetInt32(3));
-                                    department.ParentDepartment = reader.GetInt32(4);
+                                    department.ParentDepartmentID = reader.GetInt32(4);
                                     department.HeadEmployeeID = reader.GetInt32(5);
+                                    department.ParentDepartmentName = reader.IsDBNull(6) ? null : reader.GetString(6);
+                                    department.HeadEmployeeName = reader.IsDBNull(7) ? null : reader.GetString(7);
                                     departments.Add(department);
                                 }
                             }
@@ -81,7 +89,7 @@ namespace Data.Repositories
                 {
                     try
                     {
-                        command.CommandText = @"INSERT INTO [Oddelenie]
+                        command.CommandText = @"INSERT INTO [Department]
                                                ([Code]
                                                ,[Name]
                                                ,[Hierarchy]
@@ -97,7 +105,7 @@ namespace Data.Repositories
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartment;
+                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartmentID;
                         command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
 
                         return command.ExecuteNonQuery() > 0;
@@ -128,7 +136,7 @@ namespace Data.Repositories
                 {
                     try
                     {
-                        command.CommandText = @"UPDATE [Oddelenie]
+                        command.CommandText = @"UPDATE [Department]
                                                    SET [Code] = @Code
                                                       ,[Name] = @Name
                                                       ,[Hierarchy] = @Hierarchy
@@ -140,7 +148,7 @@ namespace Data.Repositories
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartment;
+                        command.Parameters.Add("@ParentDepartment", SqlDbType.Int).Value = department.ParentDepartmentID;
                         command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
 
                         return command.ExecuteNonQuery() > 0;

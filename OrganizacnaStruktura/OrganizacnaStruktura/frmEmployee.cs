@@ -16,6 +16,7 @@ namespace OrganizacnaStruktura
     {
         EmployeesLogic _employeeLogic = new EmployeesLogic();
         DepartmentsLogic _departmentsLogic = new DepartmentsLogic();
+        EmployeeModel _employee = new EmployeeModel();
 
         public frmEmployee(EFrmAction eFrmAction, EmployeeModel employee)
         {
@@ -24,15 +25,20 @@ namespace OrganizacnaStruktura
             cmbDepartment.DataSource = _departmentsLogic.GetDepartments();
             cmbDepartment.DisplayMember = "Name";
             cmbDepartment.ValueMember = "ID";
+            _employee = employee;
 
             switch (eFrmAction)
             {
                 case EFrmAction.add:
+                    Text = "Pridanie nového zamestnanca";
                     lblNameOfFrm.Text = "Pridanie nového zamestnanca";
+                    btnSaveExist.Visible = false;
                     break;
                 case EFrmAction.edit:
+                    Text = "Editácia existujúceho zamestnanca";
                     lblNameOfFrm.Text = "Editácia existujúceho zamestnanca";
-                    FillFrmFromEmployee(employee);
+                    btnSaveNew.Visible = false;
+                    FillFrmFromEmployee(_employee);
                     break;
                 default:
                     break;
@@ -41,29 +47,28 @@ namespace OrganizacnaStruktura
 
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
-            EmployeeModel employee = LoadEmployeeFromFrm();
-            _employeeLogic.UpdateEmployee(employee);
+            _employee = LoadEmployeeFromFrm(_employee);
+            _employeeLogic.UpdateEmployee(_employee);
             Close();
         }
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            EmployeeModel employee = LoadEmployeeFromFrm();
+            EmployeeModel employee = LoadEmployeeFromFrm(_employee);
             _employeeLogic.InsertEmployee(employee);
             Close();
         }
 
-        private EmployeeModel LoadEmployeeFromFrm()
+        private EmployeeModel LoadEmployeeFromFrm(EmployeeModel _employee)
         {
-            EmployeeModel employee = new EmployeeModel();
-            employee.Title = txbTitle.Text;
-            employee.FirstName = txbFirstName.Text;
-            employee.Lastname = txbLastName.Text;
-            employee.Telephone = txbTelephone.Text;
-            employee.Email = txbEmail.Text;
+            _employee.Title = txbTitle.Text;
+            _employee.FirstName = txbFirstName.Text;
+            _employee.Lastname = txbLastName.Text;
+            _employee.Telephone = txbTelephone.Text;
+            _employee.Email = txbEmail.Text;
             DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
-            employee.DepartmentID = dep.ID;
-            return employee;
+            _employee.DepartmentID = dep.ID;
+            return _employee;
         }
 
         private void FillFrmFromEmployee(EmployeeModel employee)

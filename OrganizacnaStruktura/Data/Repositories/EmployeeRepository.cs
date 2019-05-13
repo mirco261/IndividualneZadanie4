@@ -29,14 +29,17 @@ namespace Data.Repositories
                 }
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"SELECT [ID]
+                    command.CommandText = @"SELECT e.[ID]
                                           ,[Title]
                                           ,[FirstName]
                                           ,[LastName]
                                           ,[Telephone]
                                           ,[Email]
                                           ,[DepartmentID]
-                                            FROM [Employee]";
+										  ,d.[Name]
+                                          FROM [Employee] as e
+									      LEFT JOIN Department as d
+									      ON e.[DepartmentID] = d.ID";
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -52,10 +55,13 @@ namespace Data.Repositories
                                         Lastname = reader.GetString(3),
                                         Telephone = reader.GetString(4),
                                         Email = reader.GetString(5),
-                                        DepartmentID = (reader.GetInt32(6))
+                                        DepartmentID = reader.GetInt32(6),
+                                        DepartmentName = reader.GetString(7)
                                     };
                                     employees.Add(employee);
-                                }
+                                                                        
+                                 }
+                            
                             }
                         }
                     }
@@ -152,9 +158,9 @@ namespace Data.Repositories
                         command.Parameters.Add("@ID", SqlDbType.Int).Value = employee.ID;
                         command.Parameters.Add("@Title", SqlDbType.NVarChar).Value = employee.Title;
                         command.Parameters.Add("@FirstName", SqlDbType.NVarChar).Value = employee.FirstName;
-                        command.Parameters.Add("@LastName", SqlDbType.Int).Value = employee.Lastname;
-                        command.Parameters.Add("@Telephone", SqlDbType.Int).Value = employee.Telephone;
-                        command.Parameters.Add("@Email", SqlDbType.Int).Value = employee.Email;
+                        command.Parameters.Add("@LastName", SqlDbType.NVarChar).Value = employee.Lastname;
+                        command.Parameters.Add("@Telephone", SqlDbType.NVarChar).Value = employee.Telephone;
+                        command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = employee.Email;
                         command.Parameters.Add("@DepartmentID", SqlDbType.Int).Value = employee.DepartmentID;
 
                         return command.ExecuteNonQuery() > 0;

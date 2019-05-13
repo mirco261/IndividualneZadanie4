@@ -15,6 +15,7 @@ namespace Data.Models
         public string Telephone { get; set; }
         public string Email { get; set; }
         public int DepartmentID { get; set; }
+        public string DepartmentName { get; set; }
         public string FullName
         {
             get { return $"{Lastname} {FirstName} {Title}";}

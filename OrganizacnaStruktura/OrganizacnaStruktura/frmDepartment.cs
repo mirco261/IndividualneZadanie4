@@ -75,7 +75,7 @@ namespace OrganizacnaStruktura
             department.Name = txbDepartmentName.Text;
             department.Hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
             DepartmentModel dep = (DepartmentModel)(cmbParentDeparment.SelectedItem);
-            department.ParentDepartment = dep.ID;
+            department.ParentDepartmentID = dep.ID;
             department.ID = _department.ID;
 
             EmployeeModel employee = (EmployeeModel)cmbHeadEmployee.SelectedItem;
@@ -92,10 +92,9 @@ namespace OrganizacnaStruktura
             txbDepartmentCode.Text = department.Code;
             txbDepartmentName.Text = department.Name;
             cmbHeadEmployee.Text = department.HeadEmployeeID.ToString();
-            cmbParentDeparment.Text = department.ParentDepartment.ToString();
+            cmbParentDeparment.Text = department.ParentDepartmentID.ToString();
             cmbHierarchy.Text = department.Hierarchy.ToString();
         }
-
 
         private void cmbHierarchy_SelectedIndexChanged(object sender, EventArgs e)
         {
