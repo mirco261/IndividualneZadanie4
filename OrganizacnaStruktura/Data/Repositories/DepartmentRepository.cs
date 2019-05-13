@@ -38,7 +38,7 @@ namespace Data.Repositories
 											  ,e.LastName+ ' '+ e.FirstName+ ' '+ e.Title as  'HeadEmployeeName'
                                               FROM Department as o1
 											  left join Department as o2
-											  on o1.ParentDepartment = o2.ID
+											  on o1.ParentDepartmentID = o2.ID
 											  left join Employee as e
 											  on o1.HeadEmployeeID = e.ID";
                     try
@@ -53,8 +53,8 @@ namespace Data.Repositories
                                     department.Code = reader.GetString(1);
                                     department.Name = reader.GetString(2);
                                     department.Hierarchy = (EHierarchy)(reader.GetInt32(3));
-                                    department.ParentDepartmentID = reader.GetInt32(4);
-                                    department.HeadEmployeeID = reader.GetInt32(5);
+                                    department.ParentDepartmentID = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+                                    department.HeadEmployeeID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                                     department.ParentDepartmentName = reader.IsDBNull(6) ? null : reader.GetString(6);
                                     department.HeadEmployeeName = reader.IsDBNull(7) ? null : reader.GetString(7);
                                     departments.Add(department);
@@ -105,8 +105,24 @@ namespace Data.Repositories
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
-                        command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
+                        
+                        if (department.ParentDepartmentID != 0)
+                        {
+                            command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
+                        }
+                        else
+                        {
+                            command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = DBNull.Value;
+                        }
+                        if (department.HeadEmployeeID != 0)
+                        {
+                            command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
+                        }
+                        else
+                        {
+                            command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = DBNull.Value;
+                        }
+
 
                         return command.ExecuteNonQuery() > 0;
                     }
@@ -140,7 +156,7 @@ namespace Data.Repositories
                                                    SET [Code] = @Code
                                                       ,[Name] = @Name
                                                       ,[Hierarchy] = @Hierarchy
-                                                      ,[ParentDepartmentID] = @ParentDepartment
+                                                      ,[ParentDepartmentID] = @ParentDepartmentID
                                                       ,[HeadEmployeeID] = @HeadEmployeeID
                                                  WHERE [ID] = @ID";
 
@@ -148,8 +164,22 @@ namespace Data.Repositories
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;
-                        command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
-                        command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
+                        if (department.ParentDepartmentID != 0)
+                        {
+                            command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = department.ParentDepartmentID;
+                        }
+                        else
+                        {
+                            command.Parameters.Add("@ParentDepartmentID", SqlDbType.Int).Value = DBNull.Value;
+                        }
+                        if (department.HeadEmployeeID != 0)
+                        {
+                            command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = department.HeadEmployeeID;
+                        }
+                        else
+                        {
+                            command.Parameters.Add("@HeadEmployeeID", SqlDbType.Int).Value = DBNull.Value;
+                        }
 
                         return command.ExecuteNonQuery() > 0;
                     }

@@ -107,10 +107,11 @@ namespace OrganizacnaStruktura
 
         private void RefreshCmbHierarchy()
         {
-            List<DepartmentModel> departments = _departmentsLogic.GetDepartments();
-            int hierarchy = (int)cmbHierarchy.SelectedValue;
+            EHierarchy hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
+
             //insert only departments, where hierarchy is one level above
-            cmbParentDeparment.DataSource = departments.Where(dep => (int)dep.Hierarchy == hierarchy - 1).ToList();
+            List<DepartmentModel> departments = _departmentsLogic.GetParentsDepartments(hierarchy);
+            cmbParentDeparment.DataSource = departments.ToList();
             cmbParentDeparment.ValueMember = "Name";
         }
     }

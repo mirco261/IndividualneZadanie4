@@ -22,6 +22,14 @@ namespace Logika
             return _departmentRepository.SelectDepartments();
         }
 
+        public List<DepartmentModel> GetParentsDepartments(EHierarchy eHierarchy)
+        {
+            List<DepartmentModel> departments = _departmentRepository.SelectDepartments();
+            return departments.Where(dep => (int)dep.Hierarchy == (int)eHierarchy - 1).ToList();
+        }
+
+        
+
         public bool InsertDepartment(DepartmentModel department)
         {
             return _departmentRepository.InsertDepartment(department);
