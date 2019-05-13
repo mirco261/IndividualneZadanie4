@@ -25,6 +25,7 @@ namespace OrganizacnaStruktura
             cmbDepartment.DataSource = _departmentsLogic.GetDepartments();
             cmbDepartment.DisplayMember = "Name";
             cmbDepartment.ValueMember = "ID";
+
             _employee = employee;
 
             switch (eFrmAction)

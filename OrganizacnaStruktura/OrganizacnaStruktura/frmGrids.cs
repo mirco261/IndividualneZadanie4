@@ -73,6 +73,7 @@ namespace OrganizacnaStruktura
                 default:
                     break;
             }
+            dataGridView.Rows[0].Selected = false;
 
         }
 

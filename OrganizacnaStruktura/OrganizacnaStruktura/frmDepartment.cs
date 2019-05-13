@@ -92,16 +92,22 @@ namespace OrganizacnaStruktura
             txbDepartmentCode.Text = department.Code;
             txbDepartmentName.Text = department.Name;
             cmbHeadEmployee.Text = department.HeadEmployeeID.ToString();
-            cmbParentDeparment.Text = department.ParentDepartmentID.ToString();
             cmbHierarchy.Text = department.Hierarchy.ToString();
+            cmbParentDeparment.Text = department.ParentDepartmentName;
+            cmbHeadEmployee.SelectedValue = department.HeadEmployeeID;
         }
 
         private void cmbHierarchy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RefreshCmbHierarchy();
+        }
+
+        private void RefreshCmbHierarchy()
+        {
             List<DepartmentModel> departments = _departmentsLogic.GetDepartments();
             int hierarchy = (int)cmbHierarchy.SelectedValue;
             //insert only departments, where hierarchy is one level above
-            cmbParentDeparment.DataSource = departments.Where(dep => (int)dep.Hierarchy == hierarchy-1).ToList();
+            cmbParentDeparment.DataSource = departments.Where(dep => (int)dep.Hierarchy == hierarchy - 1).ToList();
             cmbParentDeparment.ValueMember = "Name";
         }
     }
