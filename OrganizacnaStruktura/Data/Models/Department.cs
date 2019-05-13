@@ -12,7 +12,7 @@ namespace Data.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public EHierarchy Hierarchy { get; set; }
-        public int ParentDepartment { get; set; }
+        public int ParentDepartment {get; set; }
         public int HeadEmployeeID { get; set; }
     }
 }

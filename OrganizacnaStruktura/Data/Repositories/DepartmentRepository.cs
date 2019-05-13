@@ -135,6 +135,7 @@ namespace Data.Repositories
                                                       ,[HeadEmployeeID] = @HeadEmployeeID
                                                  WHERE [ID] = @ID";
 
+                        command.Parameters.Add("@ID", SqlDbType.NVarChar).Value = department.ID;
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;

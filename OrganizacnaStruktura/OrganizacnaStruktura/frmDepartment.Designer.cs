@@ -89,10 +89,11 @@
             this.lblParentDepartment.TabIndex = 4;
             this.lblParentDepartment.Text = "Nadriadené oddelenie";
             // 
-            // txbDeparmentCode
+            // txbDepartmentCode
             // 
             this.txbDepartmentCode.Location = new System.Drawing.Point(142, 45);
-            this.txbDepartmentCode.Name = "txbDeparmentCode";
+            this.txbDepartmentCode.MaxLength = 10;
+            this.txbDepartmentCode.Name = "txbDepartmentCode";
             this.txbDepartmentCode.Size = new System.Drawing.Size(149, 20);
             this.txbDepartmentCode.TabIndex = 5;
             // 
@@ -111,6 +112,7 @@
             this.cmbHierarchy.Name = "cmbHierarchy";
             this.cmbHierarchy.Size = new System.Drawing.Size(149, 21);
             this.cmbHierarchy.TabIndex = 7;
+            this.cmbHierarchy.SelectedIndexChanged += new System.EventHandler(this.cmbHierarchy_SelectedIndexChanged);
             // 
             // cmbParentDeparment
             // 

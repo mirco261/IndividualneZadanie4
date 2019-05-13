@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Data.Models;
 using Logika;
 
 namespace OrganizacnaStruktura
@@ -30,18 +31,20 @@ namespace OrganizacnaStruktura
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            using (frmDepartment department = new frmDepartment(EFrmType.add))
+            Department department = new Department();
+            using (frmDepartment frmDepartment = new frmDepartment(EFrmType.add, department))
             {
-                department.ShowDialog();
+                frmDepartment.ShowDialog();
                 RefreshGrid();
             }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            using (frmDepartment department = new frmDepartment(EFrmType.edit))
+            Department department = (Department)dgvDepartments.CurrentRow.DataBoundItem;
+            using (frmDepartment frmDepartment = new frmDepartment(EFrmType.edit, department))
             {
-                department.ShowDialog();
+                frmDepartment.ShowDialog();
                 RefreshGrid();
             }
         }
