@@ -15,25 +15,29 @@ namespace OrganizacnaStruktura
     public partial class frmDepartment : Form
     {
         DepartmentsLogic _departmentsLogic = new DepartmentsLogic();
-        private Department _department;
+        EmployeesLogic _employeesLogic = new EmployeesLogic();
+        private DepartmentModel _department;
 
 
-        public frmDepartment(EFrmType eFrmType, Department department)
+        public frmDepartment(EFrmAction eFrmType, DepartmentModel department)
         {
             InitializeComponent();
             cmbHierarchy.DataSource = Enum.GetValues(typeof(EHierarchy));
             _department = department;
 
+            cmbHeadEmployee.DataSource = _employeesLogic.GetEmployees();
+            cmbHeadEmployee.DisplayMember = "FullName";
+            cmbHeadEmployee.ValueMember = "ID";
 
             switch (eFrmType)
             {
-                case EFrmType.add:
+                case EFrmAction.add:
                     Text = "Pridanie nového oddelenia";
                     lblNameOfFrm.Text = "Pridanie nového oddelenia";
                     btnSaveExist.Visible = false;
                     break;
 
-                case EFrmType.edit:
+                case EFrmAction.edit:
                     Text = "Editácia existujúceho oddelenia";
                     lblNameOfFrm.Text = "Editácia existujúceho oddelenia";
                     btnSaveNew.Visible = false;
@@ -48,14 +52,14 @@ namespace OrganizacnaStruktura
 
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
-            Department department = LoadDeparmentFromFrm();
+            DepartmentModel department = LoadDeparmentFromFrm();
             _departmentsLogic.UpdateDepartment(department);
             Close();
         }
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            Department department = LoadDeparmentFromFrm();
+            DepartmentModel department = LoadDeparmentFromFrm();
             _departmentsLogic.InsertDepartment(department);
             Close();
         }
@@ -64,16 +68,18 @@ namespace OrganizacnaStruktura
         /// Load users added information about department from frm
         /// </summary>
         /// <returns>department model</returns>
-        private Department LoadDeparmentFromFrm()
+        private DepartmentModel LoadDeparmentFromFrm()
         {
-            Department department = new Department();
+            DepartmentModel department = new DepartmentModel();
             department.Code = txbDepartmentCode.Text;
             department.Name = txbDepartmentName.Text;
             department.Hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
-            Department dep = (Department)(cmbParentDeparment.SelectedItem);
+            DepartmentModel dep = (DepartmentModel)(cmbParentDeparment.SelectedItem);
             department.ParentDepartment = dep.ID;
             department.ID = _department.ID;
-            //department.HeadEmployeeID = int.Parse(cmbHeadEmployee.SelectedItem);
+
+            EmployeeModel employee = (EmployeeModel)cmbHeadEmployee.SelectedItem;
+            department.HeadEmployeeID = employee.ID;
             return department;
         }
 
@@ -81,7 +87,7 @@ namespace OrganizacnaStruktura
         /// Fill boxes with information about department
         /// </summary>
         /// <param name="department">department from previous frm</param>
-        private void FillFormFromDepartment(Department department)
+        private void FillFormFromDepartment(DepartmentModel department)
         {
             txbDepartmentCode.Text = department.Code;
             txbDepartmentName.Text = department.Name;
@@ -93,7 +99,7 @@ namespace OrganizacnaStruktura
 
         private void cmbHierarchy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Department> departments = _departmentsLogic.GetDepartments();
+            List<DepartmentModel> departments = _departmentsLogic.GetDepartments();
             int hierarchy = (int)cmbHierarchy.SelectedValue;
             //insert only departments, where hierarchy is one level above
             cmbParentDeparment.DataSource = departments.Where(dep => (int)dep.Hierarchy == hierarchy-1).ToList();

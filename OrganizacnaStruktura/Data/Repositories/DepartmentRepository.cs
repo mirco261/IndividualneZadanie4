@@ -13,9 +13,9 @@ namespace Data.Repositories
 {
     public class DepartmentRepository
     {
-        public List<Department> SelectDepartments()
+        public List<DepartmentModel> SelectDepartments()
         {
-            List<Department> departments = new List<Department>();
+            List<DepartmentModel> departments = new List<DepartmentModel>();
             using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
             {
                 try
@@ -42,7 +42,7 @@ namespace Data.Repositories
                             {
                                 while (reader.Read())
                                 {
-                                    Department department = new Department();
+                                    DepartmentModel department = new DepartmentModel();
                                     department.ID = reader.GetInt32(0);
                                     department.Code = reader.GetString(1);
                                     department.Name = reader.GetString(2);
@@ -63,7 +63,8 @@ namespace Data.Repositories
             }
         }
 
-        public bool InsertDepartment(Department department)
+
+        public bool InsertDepartment(DepartmentModel department)
         {
             using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
             {
@@ -110,7 +111,7 @@ namespace Data.Repositories
             }
         }
 
-        public bool UpdateDepartment(Department department)
+        public bool UpdateDepartment(DepartmentModel department)
         {
             using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
             {

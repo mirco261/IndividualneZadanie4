@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OrganizacnaStruktura
 {
-    public enum EFrmType
+    public enum EFrmAction
     {
-        employees,
-        departments
+        add,
+        edit
     }
 }

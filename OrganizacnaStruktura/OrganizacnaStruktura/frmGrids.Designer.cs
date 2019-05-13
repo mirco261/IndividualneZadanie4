@@ -1,6 +1,6 @@
 ﻿namespace OrganizacnaStruktura
 {
-    partial class frmDepartments
+    partial class frmGrids
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvDepartments = new System.Windows.Forms.DataGridView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDepartments)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvDepartments
             // 
-            this.dgvDepartments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDepartments.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dgvDepartments.Location = new System.Drawing.Point(0, 0);
-            this.dgvDepartments.Name = "dgvDepartments";
-            this.dgvDepartments.ReadOnly = true;
-            this.dgvDepartments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDepartments.Size = new System.Drawing.Size(800, 385);
-            this.dgvDepartments.TabIndex = 0;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dataGridView.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView.Name = "dgvDepartments";
+            this.dataGridView.ReadOnly = true;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView.Size = new System.Drawing.Size(800, 385);
+            this.dataGridView.TabIndex = 0;
             // 
             // btnAdd
             // 
@@ -83,18 +83,18 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.dgvDepartments);
+            this.Controls.Add(this.dataGridView);
             this.Name = "frmDepartments";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmDepartments";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDepartments)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvDepartments;
+        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;

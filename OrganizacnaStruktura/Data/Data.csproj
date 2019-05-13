@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DepartmentModel.cs" />
     <Compile Include="Models\EHierarchy.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

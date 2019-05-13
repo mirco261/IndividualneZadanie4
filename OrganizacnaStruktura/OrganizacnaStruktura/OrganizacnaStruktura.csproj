@@ -47,11 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFrmType.cs" />
+    <Compile Include="EFrmAction.cs" />
     <Compile Include="frmDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDepartment.Designer.cs">
       <DependentUpon>frmDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEmployee.Designer.cs">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -59,19 +66,22 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDepartments.cs">
+    <Compile Include="frmGrids.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDepartments.Designer.cs">
-      <DependentUpon>frmDepartments.cs</DependentUpon>
+    <Compile Include="frmGrids.Designer.cs">
+      <DependentUpon>frmGrids.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmDepartment.resx">
       <DependentUpon>frmDepartment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDepartments.resx">
-      <DependentUpon>frmDepartments.cs</DependentUpon>
+    <EmbeddedResource Include="frmEmployee.resx">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGrids.resx">
+      <DependentUpon>frmGrids.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

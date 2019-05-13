@@ -19,7 +19,15 @@ namespace OrganizacnaStruktura
 
         private void btnDepartments_Click(object sender, EventArgs e)
         {
-            using (frmDepartments departments = new frmDepartments())
+            using (frmGrids departments = new frmGrids(EFrmType.departments))
+            {
+                departments.ShowDialog();
+            }
+        }
+
+        private void btnEmployees_Click(object sender, EventArgs e)
+        {
+            using (frmGrids departments = new frmGrids(EFrmType.employees))
             {
                 departments.ShowDialog();
             }

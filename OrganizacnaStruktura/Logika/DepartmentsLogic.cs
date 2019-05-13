@@ -17,17 +17,17 @@ namespace Logika
         /// Return list of departments from db
         /// </summary>
         /// <returns></returns>
-        public List<Department> GetDepartments()
+        public List<DepartmentModel> GetDepartments()
         {
             return _departmentRepository.SelectDepartments();
         }
 
-        public bool InsertDepartment(Department department)
+        public bool InsertDepartment(DepartmentModel department)
         {
             return _departmentRepository.InsertDepartment(department);
         }
 
-        public bool UpdateDepartment(Department department)
+        public bool UpdateDepartment(DepartmentModel department)
         {
             return _departmentRepository.UpdateDepartment(department);
         }
