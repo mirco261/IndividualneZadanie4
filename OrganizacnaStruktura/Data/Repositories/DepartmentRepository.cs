@@ -81,21 +81,18 @@ namespace Data.Repositories
                     try
                     {
                         command.CommandText = @"INSERT INTO [Oddelenie]
-                                               ([ID]
-                                               ,[Code]
+                                               ([Code]
                                                ,[Name]
                                                ,[Hierarchy]
                                                ,[ParentDepartment]
                                                ,[HeadEmployeeID])
                                          VALUES
-                                               (@ID,
-                                               ,@Code,
-                                               ,@Name,
-                                               ,@Hierarchy, 
-                                               ,@ParentDepartment, 
+                                               (@Code
+                                               ,@Name
+                                               ,@Hierarchy
+                                               ,@ParentDepartment
                                                ,@HeadEmployeeID)";
 
-                        command.Parameters.Add("@ID", SqlDbType.Int).Value = department.ID;
                         command.Parameters.Add("@Code", SqlDbType.NVarChar).Value = department.Code;
                         command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = department.Name;
                         command.Parameters.Add("@Hierarchy", SqlDbType.Int).Value = (int)department.Hierarchy;

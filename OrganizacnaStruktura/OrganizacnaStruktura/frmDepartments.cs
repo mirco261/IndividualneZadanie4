@@ -19,7 +19,31 @@ namespace OrganizacnaStruktura
         {
             InitializeComponent();
 
+            RefreshGrid();
+        }
+
+        private void RefreshGrid()
+        {
+            dgvDepartments.DataSource = "";
             dgvDepartments.DataSource = _departmentsLogic.GetDepartments();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (frmDepartment department = new frmDepartment(EFrmType.add))
+            {
+                department.ShowDialog();
+                RefreshGrid();
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            using (frmDepartment department = new frmDepartment(EFrmType.edit))
+            {
+                department.ShowDialog();
+                RefreshGrid();
+            }
         }
     }
 }
