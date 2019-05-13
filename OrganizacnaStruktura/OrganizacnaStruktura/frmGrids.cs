@@ -28,6 +28,7 @@ namespace OrganizacnaStruktura
             {
                 case EFrmType.employees:
                     Text = "Zoznam zamestnancov";
+                    treeView.Visible = false;
                     break;
 
                 case EFrmType.departments:
@@ -64,13 +65,59 @@ namespace OrganizacnaStruktura
                     dataGridView.Columns["ParentDepartmentID"].Visible = false;
                     dataGridView.Columns["HeadEmployeeID"].Visible = false;
                     dataGridView.Columns["ParentDepartmentName"].HeaderText = "Nadriadené oddelenie";
-                    dataGridView.Columns["HeadEmployeeID"].Visible = false;
                     dataGridView.Columns["HeadEmployeeName"].HeaderText = "Zodpovedný zamestnanec";
+
+                    RefreshTreeList();
                     break;
             }
-            //dataGridView.Rows[0].Selected = false;
-
         }
+
+        private void RefreshTreeList()
+        {
+            treeView.Nodes.Clear();
+            List<DepartmentModel> list = _departmentsLogic.GetDepartments();
+            List<DepartmentModel> companies = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Firma);
+            int firmaInt = 0;
+            foreach (var company in companies)
+            {
+                treeView.Nodes.Add($"{company.Name}");
+                List<DepartmentModel> divisions = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Divízia);
+                int diviziaInt = 0;
+                foreach (var division in divisions)
+                {
+                    if (division.ParentDepartmentID == company.ID)
+                    {
+                        treeView.Nodes[firmaInt].Nodes.Add($"{division.Name}");
+                        List<DepartmentModel> projects = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Projekt);
+                        int ProjektInt = 0;
+                        foreach (var project in projects)
+                        {
+                            if (project.ParentDepartmentID == division.ID)
+                            {
+                                treeView.Nodes[firmaInt].Nodes[diviziaInt].Nodes.Add($"{project.Name}");
+                                List<DepartmentModel> departments = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Oddelenie);
+                                int OddelenieInt = 0;
+                                foreach (var department in departments)
+                                {
+                                    if (department.ParentDepartmentID == project.ID)
+                                    {
+                                        treeView.Nodes[firmaInt].Nodes[diviziaInt].Nodes[ProjektInt].Nodes.Add($"{department.Name}");
+
+                                    }
+                                    OddelenieInt++;
+                                }
+
+                            }
+                            ProjektInt++;
+                        }
+                    }
+                    diviziaInt++;
+                }
+                firmaInt++;
+            }
+            treeView.ExpandAll();
+        }
+
 
         private void btnAdd_Click(object sender, EventArgs e)
         {

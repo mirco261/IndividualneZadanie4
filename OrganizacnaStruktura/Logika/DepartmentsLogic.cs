@@ -16,19 +16,27 @@ namespace Logika
         /// <summary>
         /// Return list of departments from db
         /// </summary>
-        /// <returns></returns>
         public List<DepartmentModel> GetDepartments()
         {
             return _departmentRepository.SelectDepartments();
         }
 
+        /// <summary>
+        /// Return only departments, that can be parents of this hierarchy
+        /// </summary>
         public List<DepartmentModel> GetParentsDepartments(EHierarchy eHierarchy)
         {
             List<DepartmentModel> departments = _departmentRepository.SelectDepartments();
             return departments.Where(dep => (int)dep.Hierarchy == (int)eHierarchy - 1).ToList();
         }
 
-        
+        /// <summary>
+        /// return list, where is only deparments, that are in this eHierarchy
+        /// </summary>
+        public List<DepartmentModel> GetNamesOfHierarchy(List<DepartmentModel> list, EHierarchy eHierarchy)
+        {
+            return list.Where(filter => filter.Hierarchy == eHierarchy).ToList();
+        }
 
         public bool InsertDepartment(DepartmentModel department)
         {
@@ -39,5 +47,8 @@ namespace Logika
         {
             return _departmentRepository.UpdateDepartment(department);
         }
+
+
+
     }
 }

@@ -28,19 +28,20 @@ namespace Data.Repositories
                 }
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"SELECT o1.ID
-                                              ,o1.Code 
-                                              ,o1.Name
-                                              ,o1.Hierarchy
-                                              ,o1.ParentDepartmentID
-                                              ,o1.HeadEmployeeID
-											  ,o2.Name
-											  ,e.LastName+ ' '+ e.FirstName+ ' '+ e.Title as  'HeadEmployeeName'
-                                              FROM Department as o1
-											  left join Department as o2
-											  on o1.ParentDepartmentID = o2.ID
-											  left join Employee as e
-											  on o1.HeadEmployeeID = e.ID";
+                    command.CommandText = @"SELECT dep1.ID
+                                              ,dep1.Code 
+                                              ,dep1.Name
+                                              ,dep1.Hierarchy
+                                              ,dep1.ParentDepartmentID
+                                              ,dep1.HeadEmployeeID
+											  ,dep2.Name
+											  ,emp.LastName+ ' '+ emp.FirstName+ ' '+ emp.Title as  'HeadEmployeeName'
+                                              FROM Department as dep1
+											  left join Department as dep2
+											  on dep1.ParentDepartmentID = dep2.ID
+											  left join Employee as emp
+											  on dep1.HeadEmployeeID = emp.ID
+                                              ORDER BY dep1.ParentDepartmentID asc";
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -48,15 +49,17 @@ namespace Data.Repositories
                             {
                                 while (reader.Read())
                                 {
-                                    DepartmentModel department = new DepartmentModel();
-                                    department.ID = reader.GetInt32(0);
-                                    department.Code = reader.GetString(1);
-                                    department.Name = reader.GetString(2);
-                                    department.Hierarchy = (EHierarchy)(reader.GetInt32(3));
-                                    department.ParentDepartmentID = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
-                                    department.HeadEmployeeID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                                    department.ParentDepartmentName = reader.IsDBNull(6) ? null : reader.GetString(6);
-                                    department.HeadEmployeeName = reader.IsDBNull(7) ? null : reader.GetString(7);
+                                    DepartmentModel department = new DepartmentModel
+                                    {
+                                        ID = reader.GetInt32(0),
+                                        Code = reader.GetString(1),
+                                        Name = reader.GetString(2),
+                                        Hierarchy = (EHierarchy)(reader.GetInt32(3)),
+                                        ParentDepartmentID = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                                        HeadEmployeeID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                                        ParentDepartmentName = reader.IsDBNull(6) ? null : reader.GetString(6),
+                                        HeadEmployeeName = reader.IsDBNull(7) ? null : reader.GetString(7)
+                                    };
                                     departments.Add(department);
                                 }
                             }

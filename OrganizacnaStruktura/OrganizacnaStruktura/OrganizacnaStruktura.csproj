@@ -95,6 +95,35 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\Data.Models.DepartmentModel.datasource" />
+    <None Include="Properties\DataSources\Data.Models.EmployeeModel.datasource" />
+    <None Include="Properties\DataSources\Data.Repositories.DepartmentRepository.datasource" />
+    <None Include="Properties\DataSources\Data.Repositories.EmployeeRepository.datasource" />
+    <None Include="Properties\DataSources\Data.Route.datasource" />
+    <None Include="Properties\DataSources\frmDepartment.datasource" />
+    <None Include="Properties\DataSources\frmEmployee.datasource" />
+    <None Include="Properties\DataSources\frmGrids.datasource" />
+    <None Include="Properties\DataSources\frmMain.datasource" />
+    <None Include="Properties\DataSources\Logika.DepartmentsLogic.datasource" />
+    <None Include="Properties\DataSources\Logika.EmployeesLogic.datasource" />
+    <None Include="Properties\DataSources\OrganizacnaStruktura.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\OrganizacnaStruktura.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.DataGridViewGrouper.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.DelegateGrouper.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.GroupDisplayEventArgs.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.GroupingInfo.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.GroupingSource+GroupRow.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.GroupingSource+PropertyWrapper.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.GroupingSource.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.IDataGridViewGrouperOwner.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.IGrouper.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.IGroupRow.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.PropertyGrouper.datasource" />
+    <None Include="Properties\DataSources\Subro.Controls.StartLetterGrouper.datasource" />
+    <None Include="Properties\DataSources\Subro.GenericComparer.datasource" />
+    <None Include="Properties\DataSources\Subro.GenericComparer`1[].datasource" />
+    <None Include="Properties\DataSources\Subro.PropertyDescriptorComparer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,6 +146,9 @@
       <Project>{e23de2b2-22fa-4be0-a6aa-0074eea2427e}</Project>
       <Name>Logika</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
