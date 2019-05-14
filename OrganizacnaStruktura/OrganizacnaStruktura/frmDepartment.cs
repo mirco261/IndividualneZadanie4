@@ -45,22 +45,44 @@ namespace OrganizacnaStruktura
             }
         }
 
-
-
+        #region FRM Actions
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
             DepartmentModel department = LoadDeparmentFromFrm();
-            department.ID = _department.ID;
-            _departmentsLogic.UpdateDepartment(department);
-            Close();
+            if (CheckIfCanSave(department))
+            {
+                department.ID = _department.ID;
+                _departmentsLogic.UpdateDepartment(department);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Nie je možné uložiť oddelenie, pokiaľ nemá nadriadené oddelenie");
+            };
         }
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
             DepartmentModel department = LoadDeparmentFromFrm();
-            _departmentsLogic.InsertDepartment(department);
-            Close();
+            if (CheckIfCanSave(department))
+            {
+                _departmentsLogic.InsertDepartment(department);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Nie je možné uložiť oddelenie, pokiaľ nemá nadriadené oddelenie");
+            };
         }
+
+        private bool CheckIfCanSave(DepartmentModel department)
+        {
+            return department.Hierarchy == EHierarchy.Firma || department.ParentDepartmentID != 0 ? true : false;
+        }
+        #endregion
+
+        #region Methods
+
 
         /// <summary>
         /// Load users added information about department from frm
@@ -102,17 +124,39 @@ namespace OrganizacnaStruktura
 
         private void cmbHierarchy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshCmbHierarchy();
-        }
-
-        private void RefreshCmbHierarchy()
-        {
             EHierarchy hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
 
-            //insert only departments, where hierarchy is one level above
-            List<DepartmentModel> departments = _departmentsLogic.GetParentsDepartments(hierarchy);
-            cmbParentDeparment.DataSource = departments.ToList();
-            cmbParentDeparment.ValueMember = "Name";
+            //Company does not have parent
+            if (hierarchy == EHierarchy.Firma)
+            {
+                cmbParentDeparment.Visible = false;
+                lblParentDepartment.Visible = false;
+            }
+            else
+            {
+                cmbParentDeparment.Visible = true;
+                lblParentDepartment.Visible = true;
+                RefreshCmbHierarchy(hierarchy);
+            }
         }
+
+        private void RefreshCmbHierarchy(EHierarchy hierarchy)
+        {
+            if (hierarchy == EHierarchy.Firma)
+            {
+                cmbParentDeparment.DataSource = "";
+            }
+            else
+            {
+                //insert only departments, where hierarchy is one level above
+                List<DepartmentModel> departments = _departmentsLogic.GetParentsDepartments(hierarchy);
+                cmbParentDeparment.DataSource = departments.ToList();
+                cmbParentDeparment.ValueMember = "Name";
+            }
+        }
+        #endregion
+
+
+        
     }
 }
