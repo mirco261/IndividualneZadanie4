@@ -41,7 +41,7 @@ namespace Data.Repositories
 											  on dep1.ParentDepartmentID = dep2.ID
 											  left join Employee as emp
 											  on dep1.HeadEmployeeID = emp.ID
-                                              ORDER BY dep1.Hierarchy asc";
+                                              ORDER BY dep1.Hierarchy asc, dep1.Name asc";
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
