@@ -195,5 +195,46 @@ namespace Data.Repositories
                 }
             }
         }
+
+        public List<string> UserExistInDepartment(int idUser)
+        {
+            List<string> firms = new List<string>();
+            using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (SqlException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"SELECT dep1.Name
+                                            FROM Department as dep1
+                                            WHERE HeadEmployeeID = @idUser";
+                    command.Parameters.Add("@idUser", SqlDbType.Int).Value = idUser;
+
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            {
+                                while (reader.Read())
+                                {
+                                    firms.Add(reader.GetString(0));
+                                }
+                            }
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                }
+                return firms;
+            }
+        }
     }
 }

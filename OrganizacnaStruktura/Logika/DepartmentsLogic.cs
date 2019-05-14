@@ -48,7 +48,23 @@ namespace Logika
             return _departmentRepository.UpdateDepartment(department);
         }
 
+        public List<string> UserExistInDepartment(int idUser)
+        {
+            return _departmentRepository.UserExistInDepartment(idUser);
+        }
 
+        public string GetDepartmentsOfHeadEmployee(List<string> departments)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Zamestnanca nie je možné vymazať,\npretože sa nachádza ako nadriadený\npracovník " +
+                $"v nasledovných oddeleniach:\n");
 
+            foreach (var dep in departments)
+            {
+                sb.Append($"\n - {dep}");
+            }
+            sb.Append("\n\nVyberte si v týchto oddeleniach iného vedúceho zamestnanca.");
+            return sb.ToString();
+        }
     }
 }

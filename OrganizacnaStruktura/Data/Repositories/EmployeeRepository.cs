@@ -59,9 +59,9 @@ namespace Data.Repositories
                                         DepartmentName = reader.GetString(7)
                                     };
                                     employees.Add(employee);
-                                                                        
-                                 }
-                            
+
+                                }
+
                             }
                         }
                     }
@@ -175,5 +175,35 @@ namespace Data.Repositories
             }
         }
 
+
+        public bool DeleteEmployee(int employeeId)
+        {
+            using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (SqlException e)
+                {
+                    Debug.WriteLine(e.Message);
+                    return false;
+                }
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"DELETE FROM Employee WHERE ID = @id";
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = employeeId;
+                    try
+                    {
+                        return command.ExecuteNonQuery() > 0;
+                    }
+                    catch (SqlException e)
+                    {
+                        Debug.WriteLine(e.Message);
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

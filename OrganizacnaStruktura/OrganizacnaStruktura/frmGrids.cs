@@ -33,6 +33,7 @@ namespace OrganizacnaStruktura
 
                 case EFrmType.departments:
                     Text = "Zoznam oddelení";
+                    btnDelete.Visible = false;
                     break;
             }
             RefreshGrid();
@@ -77,36 +78,36 @@ namespace OrganizacnaStruktura
             treeView.Nodes.Clear();
             List<DepartmentModel> list = _departmentsLogic.GetDepartments();
             List<DepartmentModel> companies = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Firma);
+            List<DepartmentModel> divisions = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Divízia);
+            List<DepartmentModel> projects = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Projekt);
+            List<DepartmentModel> departments = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Oddelenie);
+
+
             int firmaInt = 0;
             foreach (var company in companies)
             {
                 treeView.Nodes.Add($"{company.Name}");
-                List<DepartmentModel> divisions = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Divízia);
                 int diviziaInt = 0;
                 foreach (var division in divisions)
                 {
                     if (division.ParentDepartmentID == company.ID)
                     {
                         treeView.Nodes[firmaInt].Nodes.Add($"{division.Name}");
-                        List<DepartmentModel> projects = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Projekt);
                         int ProjektInt = 0;
                         foreach (var project in projects)
                         {
                             if (project.ParentDepartmentID == division.ID)
                             {
                                 treeView.Nodes[firmaInt].Nodes[diviziaInt].Nodes.Add($"{project.Name}");
-                                List<DepartmentModel> departments = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Oddelenie);
                                 int OddelenieInt = 0;
                                 foreach (var department in departments)
                                 {
                                     if (department.ParentDepartmentID == project.ID)
                                     {
                                         treeView.Nodes[firmaInt].Nodes[diviziaInt].Nodes[ProjektInt].Nodes.Add($"{department.Name}");
-
                                     }
                                     OddelenieInt++;
                                 }
-
                             }
                             ProjektInt++;
                         }
@@ -165,6 +166,29 @@ namespace OrganizacnaStruktura
                             RefreshGrid();
                         }
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Button only visible for Employee frm
+        /// </summary>
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.CurrentRow != null)
+            {
+                EmployeeModel employee = (EmployeeModel)dataGridView.CurrentRow.DataBoundItem;
+                List<string> departments = _departmentsLogic.UserExistInDepartment(employee.ID);
+                string message = _departmentsLogic.GetDepartmentsOfHeadEmployee(departments);
+
+                if (departments.Count != 0)
+                {
+                    MessageBox.Show(message, "Vymazanie zamestnanca");
+                }
+                else
+                {
+                    _employeesLogic.DeleteEmployee(employee.ID);
+                    RefreshGrid();
                 }
             }
         }

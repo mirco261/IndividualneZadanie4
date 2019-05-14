@@ -26,5 +26,10 @@ namespace Logika
         {
             return _employeesLogic.UpdateEmployee(employee);
         }
+
+        public bool DeleteEmployee(int employeeId)
+        {
+            return _employeesLogic.DeleteEmployee(employeeId);
+        }
     }
 }
