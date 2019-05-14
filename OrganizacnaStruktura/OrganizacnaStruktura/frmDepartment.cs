@@ -77,7 +77,7 @@ namespace OrganizacnaStruktura
 
         private bool CheckIfCanSave(DepartmentModel department)
         {
-            return department.Hierarchy == EHierarchy.Firma || department.ParentDepartmentID != 0 ? true : false;
+            return department.Hierarchy == EHierarchy.Firma || department.ParentDepartmentID != 0;
         }
         #endregion
 
@@ -150,13 +150,11 @@ namespace OrganizacnaStruktura
             {
                 //insert only departments, where hierarchy is one level above
                 List<DepartmentModel> departments = _departmentsLogic.GetParentsDepartments(hierarchy);
-                cmbParentDeparment.DataSource = departments.ToList();
+                //in list is only others departments than actual
+                cmbParentDeparment.DataSource = departments.Where(dep => dep.ID != _department.ID).ToList();
                 cmbParentDeparment.ValueMember = "Name";
             }
         }
         #endregion
-
-
-        
     }
 }

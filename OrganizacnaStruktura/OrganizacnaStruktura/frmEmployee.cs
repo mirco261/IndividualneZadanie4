@@ -48,7 +48,8 @@ namespace OrganizacnaStruktura
 
         private void btnSaveExist_Click(object sender, EventArgs e)
         {
-            EmployeeModel employee = LoadEmployeeFromFrm(_employee);
+            EmployeeModel employee = LoadEmployeeFromFrm();
+            employee.ID = _employee.ID;
             _employeeLogic.UpdateEmployee(employee);
             Close();
         }
@@ -63,19 +64,6 @@ namespace OrganizacnaStruktura
         private EmployeeModel LoadEmployeeFromFrm()
         {
             EmployeeModel employee = new EmployeeModel();
-            employee.Title = txbTitle.Text;
-            employee.FirstName = txbFirstName.Text;
-            employee.Lastname = txbLastName.Text;
-            employee.Telephone = txbTelephone.Text;
-            employee.Email = txbEmail.Text;
-            DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
-            employee.DepartmentID = dep.ID;
-            return employee;
-        }
-
-        private EmployeeModel LoadEmployeeFromFrm(EmployeeModel employee)
-        {
-            employee.ID = employee.ID;
             employee.Title = txbTitle.Text;
             employee.FirstName = txbFirstName.Text;
             employee.Lastname = txbLastName.Text;
