@@ -64,6 +64,7 @@ namespace OrganizacnaStruktura
                 departmentsList = departmentsList.Where(dep => dep.ParentDepartmentID == departmentNew.ID).ToList();
                 if (departmentsList.Count == 0 || departmentNew.Hierarchy == _department.Hierarchy)
                 {
+                    
                     _departmentsLogic.UpdateDepartment(departmentNew);
                     Close();
                 }
@@ -116,22 +117,24 @@ namespace OrganizacnaStruktura
             department.Code = txbDepartmentCode.Text;
             department.Name = txbDepartmentName.Text;
             department.Hierarchy = (EHierarchy)cmbHierarchy.SelectedValue;
-            DepartmentModel dep = (DepartmentModel)cmbParentDeparment.SelectedItem;
-            if (dep == null)
+            if (department.Hierarchy == EHierarchy.Firma)
             {
                 department.ParentDepartmentID = 0;
+                department.ParentDepartmentName = "";
             }
             else
             {
-                department.ParentDepartmentID = dep.ID;
-
+                if (cmbParentDeparment.SelectedItem != null)
+                {
+                    DepartmentModel dep = (DepartmentModel)cmbParentDeparment.SelectedItem;
+                    department.ParentDepartmentID = dep.ID;
+                }
             }
             EmployeeModel employee = (EmployeeModel)cmbHeadEmployee.SelectedItem;
             if (employee != null)
             {
                 department.HeadEmployeeID = employee.ID;
             }
-
             return department;
         }
 

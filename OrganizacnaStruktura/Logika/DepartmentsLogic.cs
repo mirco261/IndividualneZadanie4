@@ -48,6 +48,11 @@ namespace Logika
             return _departmentRepository.UpdateDepartment(department);
         }
 
+        public int DeleteDepartment(DepartmentModel department)
+        {
+            return _departmentRepository.DeleteDepartment(department);
+        }
+
         public List<string> UserExistInDepartment(int idUser)
         {
             return _departmentRepository.UserExistInDepartment(idUser);

@@ -33,7 +33,6 @@ namespace OrganizacnaStruktura
 
                 case EFrmType.departments:
                     Text = "Zoznam oddelení";
-                    btnDelete.Visible = false;
                     break;
             }
             RefreshGrid();
@@ -144,7 +143,7 @@ namespace OrganizacnaStruktura
             }
         }
 
-        private void btnEdit_Click_1(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
             //if datagridview is empty, I do not allow edit item in grid
             if (dataGridView.CurrentRow != null)
@@ -179,23 +178,51 @@ namespace OrganizacnaStruktura
         {
             if (dataGridView.CurrentRow != null)
             {
-                EmployeeModel employee = (EmployeeModel)dataGridView.CurrentRow.DataBoundItem;
-                List<string> departments = _departmentsLogic.UserExistInDepartment(employee.ID);
-                string message = _departmentsLogic.GetDepartmentsOfHeadEmployee(departments);
+                switch (_eFrmType)
+                {
+                    case EFrmType.employees:
+                        EmployeeModel employee = (EmployeeModel)dataGridView.CurrentRow.DataBoundItem;
+                        List<string> departments = _departmentsLogic.UserExistInDepartment(employee.ID);
+                        string message = _departmentsLogic.GetDepartmentsOfHeadEmployee(departments);
 
-                if (departments.Count != 0)
-                {
-                    MessageBox.Show(message, "Vymazanie zamestnanca");
-                }
-                else
-                {
-                    _employeesLogic.DeleteEmployee(employee.ID);
-                    RefreshGrid();
+                        if (departments.Count == 0)
+                        {
+                            _employeesLogic.DeleteEmployee(employee.ID);
+                            RefreshGrid();
+                        }
+                        else
+                        {
+                            MessageBox.Show(message, "Vymazanie zamestnanca");
+                        }
+                        break;
+
+                    case EFrmType.departments:
+                        DepartmentModel department = (DepartmentModel)dataGridView.CurrentRow.DataBoundItem;
+
+                        //get all departments from db
+                        List<DepartmentModel> departmentsList = _departmentsLogic.GetDepartments();
+
+                        //check if department have child departments 
+                        departmentsList = departmentsList.Where(dep => dep.ParentDepartmentID == department.ID).ToList();
+                        if (departmentsList.Count == 0)
+                        {
+                            int number = _departmentsLogic.DeleteDepartment(department);
+                            if (number == 0)
+                            {
+                                MessageBox.Show("Nie je možné vymazať oddelenie, pretože má priradených zamestnancov");
+                            }
+                            RefreshGrid();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie je možné vymazať oddelenie, pokiaľ má podriadené oddelenia");
+                        }
+                        break;
                 }
             }
         }
         #endregion
 
-        
+
     }
 }

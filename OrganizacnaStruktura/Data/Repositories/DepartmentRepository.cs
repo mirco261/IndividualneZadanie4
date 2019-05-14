@@ -196,6 +196,36 @@ namespace Data.Repositories
             }
         }
 
+        public int DeleteDepartment(DepartmentModel department)
+        {
+            using (SqlConnection connection = new SqlConnection(Route.CONNECTION_STRING))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (SqlException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    try
+                    {
+                        command.CommandText = @"DELETE FROM [Department] WHERE ID = @ID";
+                        command.Parameters.Add("@ID", SqlDbType.NVarChar).Value = department.ID;
+                        return command.ExecuteNonQuery();
+                    }
+
+                    catch (SqlException e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                }
+                return 0;
+            }
+        }
+
         public List<string> UserExistInDepartment(int idUser)
         {
             List<string> firms = new List<string>();
