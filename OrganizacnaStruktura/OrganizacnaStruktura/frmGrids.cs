@@ -39,6 +39,7 @@ namespace OrganizacnaStruktura
             RefreshGrid();
         }
 
+        #region Methods
         private void RefreshGrid()
         {
             switch (_eFrmType)
@@ -82,7 +83,6 @@ namespace OrganizacnaStruktura
             List<DepartmentModel> projects = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Projekt);
             List<DepartmentModel> departments = _departmentsLogic.GetNamesOfHierarchy(list, EHierarchy.Oddelenie);
 
-
             int firmaInt = 0;
             foreach (var company in companies)
             {
@@ -118,8 +118,10 @@ namespace OrganizacnaStruktura
             }
             treeView.ExpandAll();
         }
+        #endregion
 
 
+        #region FrmActions
         private void btnAdd_Click(object sender, EventArgs e)
         {
             switch (_eFrmType)
@@ -142,7 +144,7 @@ namespace OrganizacnaStruktura
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEdit_Click_1(object sender, EventArgs e)
         {
             //if datagridview is empty, I do not allow edit item in grid
             if (dataGridView.CurrentRow != null)
@@ -192,5 +194,8 @@ namespace OrganizacnaStruktura
                 }
             }
         }
+        #endregion
+
+        
     }
 }
