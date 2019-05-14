@@ -171,9 +171,7 @@ namespace OrganizacnaStruktura
             }
         }
 
-        /// <summary>
-        /// Button only visible for Employee frm
-        /// </summary>
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView.CurrentRow != null)
@@ -198,8 +196,6 @@ namespace OrganizacnaStruktura
 
                     case EFrmType.departments:
                         DepartmentModel department = (DepartmentModel)dataGridView.CurrentRow.DataBoundItem;
-
-                        //get all departments from db
                         List<DepartmentModel> departmentsList = _departmentsLogic.GetDepartments();
 
                         //check if department have child departments 

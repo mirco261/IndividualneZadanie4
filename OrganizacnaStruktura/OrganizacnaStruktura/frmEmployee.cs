@@ -69,8 +69,11 @@ namespace OrganizacnaStruktura
             employee.Lastname = txbLastName.Text;
             employee.Telephone = txbTelephone.Text;
             employee.Email = txbEmail.Text;
-            DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
-            employee.DepartmentID = dep.ID;
+            if (cmbDepartment.SelectedItem != null)
+            {
+                DepartmentModel dep = (DepartmentModel)cmbDepartment.SelectedItem;
+                employee.DepartmentID = dep.ID;
+            }
             return employee;
         }
 

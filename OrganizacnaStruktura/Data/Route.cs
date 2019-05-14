@@ -8,6 +8,6 @@ namespace Data
 {
     public class Route
     {
-        public static string CONNECTION_STRING = @"Server=MIRCO-PC\SQLEXPRESS;Database=OrgStructure2;Trusted_Connection=True";
+        public static string CONNECTION_STRING = @"Server=MIRCO-PC\SQLEXPRESS;Database=OrgStructure;Trusted_Connection=True";
     }
 }

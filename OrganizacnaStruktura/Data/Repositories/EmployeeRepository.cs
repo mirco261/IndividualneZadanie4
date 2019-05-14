@@ -55,8 +55,8 @@ namespace Data.Repositories
                                         Lastname = reader.GetString(3),
                                         Telephone = reader.GetString(4),
                                         Email = reader.GetString(5),
-                                        DepartmentID = reader.GetInt32(6),
-                                        DepartmentName = reader.GetString(7)
+                                        DepartmentID = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                                        DepartmentName = reader.IsDBNull(7) ? null : reader.GetString(7)
                                     };
                                     employees.Add(employee);
 
@@ -113,8 +113,15 @@ namespace Data.Repositories
                         command.Parameters.Add("@LastName", SqlDbType.NVarChar).Value = employee.Lastname;
                         command.Parameters.Add("@Telephone", SqlDbType.NVarChar).Value = employee.Telephone;
                         command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = employee.Email;
-                        command.Parameters.Add("@DepartmentID", SqlDbType.Int).Value = employee.DepartmentID;
+                        if (employee.DepartmentID != 0)
+                        {
+                            command.Parameters.Add("@DepartmentID", SqlDbType.Int).Value = employee.DepartmentID;
+                        }
+                        else
+                        {
+                            command.Parameters.Add("@DepartmentID", SqlDbType.Int).Value = DBNull.Value;
 
+                        }
                         return command.ExecuteNonQuery() > 0;
                     }
                     catch (SqlException e)
