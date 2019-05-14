@@ -100,6 +100,7 @@
             // txbDepartmentName
             // 
             this.txbDepartmentName.Location = new System.Drawing.Point(142, 73);
+            this.txbDepartmentName.MaxLength = 50;
             this.txbDepartmentName.Name = "txbDepartmentName";
             this.txbDepartmentName.Size = new System.Drawing.Size(149, 20);
             this.txbDepartmentName.TabIndex = 6;

@@ -53,11 +53,13 @@ namespace Logika
             return _departmentRepository.UserExistInDepartment(idUser);
         }
 
+        /// <summary>
+        /// Return message, where is why is not possible delete user
+        /// </summary>
         public string GetDepartmentsOfHeadEmployee(List<string> departments)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"Zamestnanca nie je možné vymazať,\npretože sa nachádza ako nadriadený\npracovník " +
-                $"v nasledovných oddeleniach:\n");
+            sb.Append($"Zamestnanca nie je možné vymazať, pretože sa nachádza \nako nadriadenýpracovník v nasledovných oddeleniach:\n");
 
             foreach (var dep in departments)
             {

@@ -84,7 +84,7 @@
             // txbFirstName
             // 
             this.txbFirstName.Location = new System.Drawing.Point(138, 71);
-            this.txbFirstName.MaxLength = 10;
+            this.txbFirstName.MaxLength = 50;
             this.txbFirstName.Name = "txbFirstName";
             this.txbFirstName.Size = new System.Drawing.Size(149, 20);
             this.txbFirstName.TabIndex = 7;
@@ -92,7 +92,7 @@
             // txbLastName
             // 
             this.txbLastName.Location = new System.Drawing.Point(138, 97);
-            this.txbLastName.MaxLength = 10;
+            this.txbLastName.MaxLength = 50;
             this.txbLastName.Name = "txbLastName";
             this.txbLastName.Size = new System.Drawing.Size(149, 20);
             this.txbLastName.TabIndex = 8;
@@ -100,7 +100,7 @@
             // txbTelephone
             // 
             this.txbTelephone.Location = new System.Drawing.Point(138, 123);
-            this.txbTelephone.MaxLength = 20;
+            this.txbTelephone.MaxLength = 50;
             this.txbTelephone.Name = "txbTelephone";
             this.txbTelephone.Size = new System.Drawing.Size(149, 20);
             this.txbTelephone.TabIndex = 9;
